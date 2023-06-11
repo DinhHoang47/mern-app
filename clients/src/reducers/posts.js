@@ -3,7 +3,8 @@ export default (posts = [], action) => {
     case "FETCH_ALL":
       return action.payload;
     case "CREATE":
-      return [...posts, action.payload];
+      const currentPosts = [...posts];
+      return currentPosts.concat(action.payload);
     case "EDIT":
       const postId = action.payload._id;
       const updatedPosts = posts.map((post) => {

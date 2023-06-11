@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Post from "../Posts/Post/Post";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress } from "@mui/material";
 import useStyle from "./styles";
 
 import { useSelector } from "react-redux";
@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 function Posts({ setSelectedCardId }) {
   const classes = useStyle();
   const posts = useSelector((state) => state.posts);
-  useEffect(() => {}, [posts]);
   return !posts.length ? (
     <CircularProgress />
   ) : (

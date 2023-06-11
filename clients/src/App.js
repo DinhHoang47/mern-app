@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
+
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import memoriesImg from "./images/memory-loss.png";
@@ -17,6 +18,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+  console.log("App re-render");
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">

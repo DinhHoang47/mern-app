@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { TextField, Button, Typography, Paper } from "@mui/material";
 import useStyle from "./styles";
 import FileBase from "react-file-base64";
 
@@ -42,8 +42,6 @@ function Form({ selectedCardId, setSelectedCardId }) {
 
   useEffect(() => {
     if (editingPost) {
-      console.log("Selected Card Id change");
-      console.log(editingPost);
       setPostData(editingPost);
     }
   }, [editingPost]);
