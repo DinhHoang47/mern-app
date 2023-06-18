@@ -22,18 +22,57 @@ export const createPost = async (req, res) => {
 };
 
 export const editPost = async (req, res) => {
-  // Get id post's id from req object
-  const { id: _id } = req.params;
-  const post = req.body;
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(404).send("Post Id not found");
-  }
-  const updatedPost = await PostMessage.findByIdAndUpdate(
-    _id,
-    { ...post, _id },
-    {
-      new: true,
+  try {
+    // Get id post's id from req object
+    const { id: _id } = req.params;
+    const post = req.body;
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(404).send("Post Id not found");
     }
-  );
-  res.json(updatedPost);
+    const updatedPost = await PostMessage.findByIdAndUpdate(
+      _id,
+      { ...post, _id },
+      {
+        new: true,
+      }
+    );
+    res.json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const deletePost = async (req, res) => {
+  try {
+    // Get id post's form req object
+    const { id: _id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(404).send("Post Id not found");
+    }
+
+    await PostMessage.findByIdAndRemove(_id);
+    return res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const likePost = async (req, res) => {
+  console.log(req);
+  try {
+    const { id: _id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(404).send("Post Id not found");
+    }
+    await PostMessage.findByIdAndUpdate(
+      _id,
+      { $inc: { likeCount: 1 } },
+      { new: true }
+    );
+    return res.json({ message: "Added like to post" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };

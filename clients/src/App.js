@@ -18,7 +18,6 @@ const App = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
-  console.log("App re-render");
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
@@ -34,11 +33,16 @@ const App = () => {
       </AppBar>
       <Grow in>
         <Container>
-          <Grid container justifyContent="space-between">
-            <Grid item xs={12} sm={7}>
+          <Grid
+            container
+            className={classes.mainContainer}
+            justifyContent="space-between"
+            spacing={3}
+          >
+            <Grid item xs={12} md={7}>
               <Posts setSelectedCardId={setSelectedCardId} />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} md={4}>
               <Form
                 setSelectedCardId={setSelectedCardId}
                 selectedCardId={selectedCardId}

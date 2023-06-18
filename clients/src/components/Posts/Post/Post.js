@@ -1,4 +1,7 @@
 import React from "react";
+
+import { useDispatch } from "react-redux";
+
 import {
   Card,
   CardActions,
@@ -13,9 +16,18 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import useStyle from "./styles";
 import moment from "moment";
 import noImg from "../../../images/no-image-200.svg";
+import { likePost, deletePost } from "../../../actions/posts";
 
 function Post({ post, setSelectedCardId }) {
   const classes = useStyle();
+  const dispatch = useDispatch();
+  const handleDelete = (id) => {
+    dispatch(deletePost(id));
+  };
+  const handlelikePost = (id) => {
+    console.log(id);
+    dispatch(likePost(id));
+  };
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -43,18 +55,33 @@ function Post({ post, setSelectedCardId }) {
           {post.tags.map((tag) => `#${tag} `)}
         </Typography>
       </div>
+      <Typography className={classes.title} variant="h5" gutterBottom>
+        {post.title}
+      </Typography>
       <CardContent>
-        <Typography className={classes.title} variant="h5" gutterBottom>
+        <Typography variant="body2" color="textSecondary" component="p">
           {post.message}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => {
+            handlelikePost(post._id);
+          }}
+        >
           <ThumbUpAltIcon fontSize="small" />
-          Like
+          &nbsp; Like &nbsp;
           {post.likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => {
+            handleDelete(post._id);
+          }}
+        >
           <DeleteIcon fontSize="small" />
           Delete
         </Button>

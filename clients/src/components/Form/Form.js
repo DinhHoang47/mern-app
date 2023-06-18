@@ -90,7 +90,9 @@ function Form({ selectedCardId, setSelectedCardId }) {
           variant="outlined"
           label="Tags"
           fullWidth
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setPostData({ ...postData, tags: e.target.value.split(",") })
+          }
           value={postData.tags}
         ></TextField>
         <div className={classes.fileInput}>
