@@ -16,7 +16,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import useStyle from "./styles";
 import moment from "moment";
 import noImg from "../../../images/no-image-200.svg";
-import { likePost, deletePost } from "../../../actions/posts";
+import { deletePost, likePost } from "../../../actions/posts";
 
 function Post({ post, setSelectedCardId }) {
   const classes = useStyle();
@@ -25,7 +25,6 @@ function Post({ post, setSelectedCardId }) {
     dispatch(deletePost(id));
   };
   const handlelikePost = (id) => {
-    console.log(id);
     dispatch(likePost(id));
   };
   return (
