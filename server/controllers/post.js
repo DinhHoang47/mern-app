@@ -59,18 +59,17 @@ export const deletePost = async (req, res) => {
 };
 
 export const likePost = async (req, res) => {
-  console.log(req);
   try {
     const { id: _id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(_id)) {
       return res.status(404).send("Post Id not found");
     }
-    await PostMessage.findByIdAndUpdate(
+    const likedPost = await PostMessage.findByIdAndUpdate(
       _id,
       { $inc: { likeCount: 1 } },
       { new: true }
     );
-    return res.json({ message: "Added like to post" });
+    res.json(likedPost);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error" });
