@@ -26,6 +26,10 @@ commit and push again ----> successful
  
 ------------------------------------
 
+// TRY TO DELETE file
+
+and commit 
+
 
 
 
