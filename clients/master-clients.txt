@@ -4,4 +4,5 @@ Create master-clients.txt file and commit it
 
 Add some commit and confict to practice solve confa-flip-vertical
 
+now let merge function to master 
 
