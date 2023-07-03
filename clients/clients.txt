@@ -1,4 +1,9 @@
+// CLONE PROJECT
+
 clone project from MERN-Memories in git lab
+
+
+// CHECK-OUT A NEW BRANCH
 type checkout -b function when inside clients folder to login-function branch
 add server to server folder
 add clients to clients folder
@@ -6,11 +11,27 @@ add clients to clients folder
 -------------------
 Try to type push ---> git show that login-function has no upstram branch
 
-
+// CREATE A NEW UP STREAM BRANCH FOR CURRENT BRANCH
 -------------------------------
 try to type push -u origin login-function --> new branch created on remote reporistory
 *untracked file are not push to the remote reporistory
 -------------------------------
+try to type git add . when currently in clients folder --> git add clients.txt to tracked file. But not add server.txt
+
+try to add server.txt  to staging by typing git add ../server/server.txt ---> it shown that server.txt is add to staging
+
+type git push ----> it shown that everything up-to-date
+
+commit and push again ----> successful
+ 
+------------------------------------
+
+
+
+
+
+
+
 
 
 
