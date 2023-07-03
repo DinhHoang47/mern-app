@@ -18,7 +18,7 @@ export default function NavBar() {
           variant="h2"
           align="center"
         >
-          Memories
+          Memories Edit in Login Function
         </Typography>
         <img
           className={classes.image}

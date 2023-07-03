@@ -38,14 +38,14 @@ export default function Auth() {
               <>
                 <Input
                   name={"firstname"}
-                  label={"First Name"}
+                  label={"First Name Edit in Login Function"}
                   handleChange={handleChange}
                   haft
                   autoFocus
                 />
                 <Input
                   name={"lastname"}
-                  label={"Last Name"}
+                  label={"Last Name Edit in Login Function"}
                   handleChange={handleChange}
                   haft
                 />
@@ -67,7 +67,7 @@ export default function Auth() {
             {isSignup && (
               <Input
                 name={"confirmPassword"}
-                label="Repeat Password"
+                label="Repeat Password Edit in Login Function"
                 handleChange={handleChange}
                 type={"password"}
               />

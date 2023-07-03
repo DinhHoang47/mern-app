@@ -28,7 +28,12 @@ commit and push again ----> successful
 
 // TRY TO DELETE file
 
-and commit 
+and commit ---> successful DELETE file
+
+// MERGED FUNCTION INTO MASTER AND COUNTINUE SOME WORK
+
+Add some conflict here again and commit
+
 
 
 
