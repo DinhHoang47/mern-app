@@ -38,14 +38,14 @@ export default function Auth() {
               <>
                 <Input
                   name={"firstname"}
-                  label={"First Name"}
+                  label={"First Name Edit in Login Function"}
                   handleChange={handleChange}
                   haft
                   autoFocus
                 />
                 <Input
                   name={"lastname"}
-                  label={"Last Name Edited"}
+                  label={"Last Name"}
                   handleChange={handleChange}
                   haft
                 />
