@@ -1,0 +1,3 @@
+// MAKE SOME CHANGES IN MASTER AND CHECK THE GIT GRAPH
+
+Create master-clients.txt file and commit it
