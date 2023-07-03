@@ -1,0 +1,16 @@
+clone project from MERN-Memories in git lab
+type checkout -b function when inside clients folder to login-function branch
+add server to server folder
+add clients to clients folder
+
+-------------------
+Try to type push ---> git show that login-function has no upstram branch
+
+
+-------------------------------
+try to type push -u origin login-function --> new branch created on remote reporistory
+*untracked file are not push to the remote reporistory
+-------------------------------
+
+
+

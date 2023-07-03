@@ -1,0 +1,3 @@
+type git checkout when i am in clients folder.
+i add this to server folder
+and in clients git push -u origin <i class="fa fa-cc-mastercard" aria-hidden="true"></i>
