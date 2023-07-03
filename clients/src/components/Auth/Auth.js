@@ -45,7 +45,7 @@ export default function Auth() {
                 />
                 <Input
                   name={"lastname"}
-                  label={"Last Name"}
+                  label={"Last Name Edited"}
                   handleChange={handleChange}
                   haft
                 />
@@ -67,7 +67,7 @@ export default function Auth() {
             {isSignup && (
               <Input
                 name={"confirmPassword"}
-                label="Repeat Password"
+                label="Repeat Password Editted"
                 handleChange={handleChange}
                 type={"password"}
               />
