@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import thunk from "redux-thunk";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import "dotenv/config";
 import "./index.css";
 
 import App from "./App.js";
@@ -18,7 +20,9 @@ const store = createStore(
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // Connect App and root element
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </GoogleOAuthProvider>
 );

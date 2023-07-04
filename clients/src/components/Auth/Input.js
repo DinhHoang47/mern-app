@@ -13,7 +13,7 @@ export default function Input({
   handleShowPassword,
 }) {
   return (
-    <Grid xs={12} sm={haft ? 6 : 12}>
+    <Grid item xs={12} sm={haft ? 6 : 12}>
       <TextField
         name={name}
         onChange={handleChange}
@@ -24,15 +24,17 @@ export default function Input({
         autoFocus={autoFocus}
         type={type}
         InputProps={
-          name === "password" && {
-            endAdornment: (
-              <InputAdornment>
-                <IconButton onClick={handleShowPassword}>
-                  {type === "password" ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }
+          name === "password"
+            ? {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleShowPassword}>
+                      {type === "password" ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }
+            : null
         }
       />
     </Grid>
