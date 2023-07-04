@@ -9,7 +9,7 @@ import Auth from "./components/Auth/Auth";
 const App = () => {
   return (
     <Router>
-      <Container maxWidth="lg">
+      <Container style={{ marginBottom: "150px" }} maxWidth="lg">
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />

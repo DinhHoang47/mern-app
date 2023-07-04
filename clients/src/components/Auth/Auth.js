@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Avatar,
   Button,
@@ -6,23 +7,36 @@ import {
   Grid,
   Typography,
   Container,
-  TextField,
 } from "@material-ui/core";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
-import { LockOutlinedIcon } from "@material-ui/icons/LockOutlined";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import useStyle from "./styles";
 import Input from "./Input";
+import { AUTH } from "../../constants/actionTypes";
 
 export default function Auth() {
   const classes = useStyle();
+  const dispatch = useDispatch();
   const state = null;
-  const isSignup = false;
   const [showPassword, setShowPassword] = useState(false);
+  const [isSignup, setIsSignUp] = useState(false);
   const handleSubmit = () => {};
   const handleChange = () => {};
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+  const handleSwitchSignUp = () => {
+    setIsSignUp((preState) => !preState);
+    setShowPassword(false);
+  };
+
+  const handleLoginWithGoogle = (res) => {
+    const { credential, clientId } = res;
+    const userInfo = jwt_decode(credential);
+    dispatch({ type: AUTH, payload: { userInfo, clientId } });
   };
 
   return (
@@ -34,11 +48,11 @@ export default function Auth() {
         <Typography variant="h5">{isSignup ? "Sign Up" : "Sign In"}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {isSignup && (
+            {isSignup ? (
               <>
                 <Input
                   name={"firstname"}
-                  label={"First Name Edit in Login Function"}
+                  label={"First Name"}
                   handleChange={handleChange}
                   haft
                   autoFocus
@@ -50,7 +64,7 @@ export default function Auth() {
                   haft
                 />
               </>
-            )}
+            ) : null}
             <Input
               name={"email"}
               label={"Email Address"}
@@ -64,14 +78,15 @@ export default function Auth() {
               type={showPassword ? "password" : "text"}
               handleShowPassword={handleShowPassword}
             />
-            {isSignup && (
+
+            {isSignup ? (
               <Input
                 name={"confirmPassword"}
-                label="Repeat Password Editted"
+                label="Repeat Password"
                 handleChange={handleChange}
                 type={"password"}
               />
-            )}
+            ) : null}
           </Grid>
           <Button
             type="submit"
@@ -83,6 +98,25 @@ export default function Auth() {
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
         </form>
+        <Button>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              handleLoginWithGoogle(credentialResponse);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+        </Button>
+        <Grid container justifyContent="flex-end">
+          <Grid item>
+            <Button onClick={handleSwitchSignUp}>
+              {isSignup
+                ? "Already have an account ? SIGN IN"
+                : "Not have an account ? SIGN UP"}
+            </Button>
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );
