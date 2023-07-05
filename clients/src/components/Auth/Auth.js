@@ -15,9 +15,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyle from "./styles";
 import Input from "./Input";
 import { AUTH } from "../../constants/actionTypes";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const classes = useStyle();
+  const navigate = useNavigate();
   useEffect(() => {
     // Declare handleCredentialResponse everytime component render
     window.handleCredentialResponse = handleCredentialResponse;
@@ -34,7 +36,7 @@ export default function Auth() {
       // Remove script when component unmounts
       document.body.removeChild(script);
     };
-  }, []);
+  });
 
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -56,6 +58,7 @@ export default function Auth() {
     const profile = { name, email, picture, family_name, given_name };
     const token = response.credential;
     dispatch({ type: AUTH, payload: { profile, token } });
+    navigate("/");
   };
 
   return (
