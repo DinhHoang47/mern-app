@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import useStyle from "./styles";
@@ -7,7 +7,7 @@ import { Button } from "@material-ui/core";
 
 export default function NavBar() {
   const classes = useStyle();
-  const user = null;
+  const [user, setUser] = useState(null);
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <div className={classes.brandContainer}>
@@ -32,13 +32,13 @@ export default function NavBar() {
           <div className={classes.profile}>
             <Avatar
               className={classes.purple}
-              alt={user.result.name}
-              src={user.result.imageUrl}
+              alt={user.profile.name}
+              src={user.profile.imageUrl}
             >
-              {user.result.name.chartAt(0)}
+              {user.profile.name.chartAt(0)}
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user.result.name}
+              {user.profile.name}
             </Typography>
             <Button
               variant="contained"

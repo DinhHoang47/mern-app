@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   Avatar,
@@ -8,7 +8,6 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -19,10 +18,28 @@ import { AUTH } from "../../constants/actionTypes";
 
 export default function Auth() {
   const classes = useStyle();
+  useEffect(() => {
+    // Declare handleCredentialResponse everytime component render
+    window.handleCredentialResponse = handleCredentialResponse;
+    // Insert script tag into DOM every time the component renders.
+    // This prevents the component from disappearing when navigating away
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      // Clean up the assignment when the component unmounts
+      delete window.handleCredentialResponse;
+      // Remove script when component unmounts
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const dispatch = useDispatch();
-  const state = null;
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignUp] = useState(false);
+
   const handleSubmit = () => {};
   const handleChange = () => {};
   const handleShowPassword = () => {
@@ -33,10 +50,12 @@ export default function Auth() {
     setShowPassword(false);
   };
 
-  const handleLoginWithGoogle = (res) => {
-    const { credential, clientId } = res;
-    const userInfo = jwt_decode(credential);
-    dispatch({ type: AUTH, payload: { userInfo, clientId } });
+  const handleCredentialResponse = (response) => {
+    const authData = jwt_decode(response.credential);
+    const { name, email, picture, family_name, given_name } = authData;
+    const profile = { name, email, picture, family_name, given_name };
+    const token = response.credential;
+    dispatch({ type: AUTH, payload: { profile, token } });
   };
 
   return (
@@ -99,14 +118,21 @@ export default function Auth() {
           </Button>
         </form>
         <Button>
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              handleLoginWithGoogle(credentialResponse);
-            }}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
+          <div
+            id="g_id_onload"
+            data-client_id={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="false"
+          ></div>
+          <div
+            className="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left"
+          ></div>
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
