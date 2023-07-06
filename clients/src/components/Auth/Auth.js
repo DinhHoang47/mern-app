@@ -16,10 +16,12 @@ import useStyle from "./styles";
 import Input from "./Input";
 import { AUTH } from "../../constants/actionTypes";
 import { useNavigate } from "react-router-dom";
+import { signIn } from "../../actions/user";
 
 export default function Auth() {
   const classes = useStyle();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     // Declare handleCredentialResponse everytime component render
     window.handleCredentialResponse = handleCredentialResponse;
@@ -36,14 +38,31 @@ export default function Auth() {
       // Remove script when component unmounts
       document.body.removeChild(script);
     };
-  });
-
-  const dispatch = useDispatch();
+  }, []);
+  // State to control show/hide password
   const [showPassword, setShowPassword] = useState(false);
+  // State for control form type sign-in/sign-up
   const [isSignup, setIsSignUp] = useState(false);
-
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  // Handle to get form data
+  const initialForm = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  };
+  const [formData, setFormData] = useState(initialForm);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      console.log("sign up clicked");
+    } else {
+      dispatch(signIn(formData));
+    }
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -97,13 +116,13 @@ export default function Auth() {
               name={"password"}
               label={"Password"}
               handleChange={handleChange}
-              type={showPassword ? "password" : "text"}
+              type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
 
             {isSignup ? (
               <Input
-                name={"confirmPassword"}
+                name={"confirmpassword"}
                 label="Repeat Password"
                 handleChange={handleChange}
                 type={"password"}
