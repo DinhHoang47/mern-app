@@ -1,25 +1,46 @@
 import axios from "axios";
+import { user } from "../services/localServices";
+
+const API = axios.create({ baseURL: process.env.REACT_APP_SERVER_BASE_URL });
+
+API.interceptors.request.use((req) => {
+  if (user.get().token) {
+    req.headers.Authorization = `Bearer ${user.get().token}`;
+  }
+  return req;
+});
 
 // const url = "https://my-memories-api.onrender.com/posts";
-const mainUrl = "http://localhost:5000";
-const postUrl = `${mainUrl}/posts`;
-const userUrl = `${mainUrl}/user`;
 
-export const fetchPosts = () => axios.get(postUrl);
+export const fetchPosts = () => {
+  return API.get("/posts");
+};
 
-export const createPost = (newPost) => axios.post(postUrl, newPost);
+export const createPost = (newPost) => API.post("/posts", newPost);
 
 export const editPost = (id, post) => {
-  return axios.patch(`${postUrl}/${id}`, post);
+  return API.patch(`/posts/${id}`, post);
 };
 
 export const deletePost = (id) => {
-  return axios.delete(`${postUrl}/${id}`);
+  return API.delete(`/posts/${id}`);
 };
 
 export const likePost = (id) => {
-  return axios.patch(`${postUrl}/${id}/likePost`);
+  return API.patch(`/posts/${id}/likePost`);
 };
 
-export const signUp = (userData) => axios.post(userUrl, userData);
-export const signIn = (userData) => axios.post(`${userUrl}/signin`, userData);
+// User APIS
+
+// Sign-up API
+
+export const signUp = (userData) => API.post(`user/signup`, userData);
+
+// Sign-in API
+
+export const signIn = (userData) => API.post(`user/signin`, userData);
+
+// Sign-in with Google API
+
+export const googleSignIn = (credential) =>
+  API.post(`user/google-signin`, credential);
