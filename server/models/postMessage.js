@@ -7,7 +7,7 @@ const postSchema = mongoose.Schema({
   name: String,
   tags: [],
   selectedFile: String,
-  like: {
+  likes: {
     type: Array,
     default: [],
   },

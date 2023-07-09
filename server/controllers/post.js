@@ -12,10 +12,7 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  console.log("post: ", post);
   const newPost = new PostMessage({ ...post, creator: req.userId });
-  console.log("newPost: ", newPost);
-
   try {
     await newPost.save();
     res.status(201).json(newPost);
@@ -70,14 +67,14 @@ export const likePost = async (req, res) => {
 
     const post = await PostMessage.findById(id);
 
-    const index = post.like.findIndex(
+    const index = post.likes.findIndex(
       (currentId) => currentId === String(req.userId)
     );
 
     if (index === -1) {
-      post.like.push(req.userId);
+      post.likes.push(req.userId);
     } else {
-      post.like = post.like.filter(
+      post.likes = post.likes.filter(
         (currentId) => currentId !== String(req.userId)
       );
     }
