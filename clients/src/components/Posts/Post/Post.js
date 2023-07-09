@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@material-ui/core/";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import useStyle from "./styles";
@@ -27,11 +28,55 @@ function Post({ post, setSelectedCardId }) {
   const handlelikePost = (id) => {
     dispatch(likePost(id));
   };
-  const Like = () => {
-    return <Button></Button>;
-  };
-
   const loginUser = useSelector((state) => state.profile);
+  const Like = () => {
+    // Display like when user is loggin
+    if (Object.keys(loginUser).length !== 0) {
+      const liked = post.likes.includes(loginUser._id);
+      //If this post is not liked
+      if (!liked) {
+        const likeCount = post.likes.length;
+        return (
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => {
+              handlelikePost(post._id);
+            }}
+          >
+            <ThumbUpOffAltIcon fontSize="small" />
+            {likeCount > 0 ? likeCount : ""}
+          </Button>
+        );
+        // If this post liked
+      } else {
+        const likeCount = post.likes.length - 1;
+        return (
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => {
+              handlelikePost(post._id);
+            }}
+          >
+            <ThumbUpAltIcon fontSize="small" />
+            &nbsp; You &nbsp;{likeCount >= 1 ? `and ${likeCount} others` : ""}
+          </Button>
+        );
+      }
+
+      // Display like when user not loggin
+    } else {
+      const likeCount = post.likes.length;
+      return (
+        <Button size="small" color="primary">
+          <ThumbUpOffAltIcon fontSize="small" />
+          &nbsp;
+          {likeCount !== 0 ? likeCount : ""}
+        </Button>
+      );
+    }
+  };
 
   return (
     <Card className={classes.card}>
@@ -46,15 +91,18 @@ function Post({ post, setSelectedCardId }) {
           {moment(post.createdAt).fromNow()}
         </Typography>
       </div>
-      <div className={classes.overlay2}>
-        <Button
-          style={{ color: "white" }}
-          size="small"
-          onClick={() => setSelectedCardId(post._id)}
-        >
-          <MoreHorizIcon fontSize="medium"></MoreHorizIcon>
-        </Button>
-      </div>
+      {loginUser._id === post.creator && (
+        <div className={classes.overlay2}>
+          <Button
+            style={{ color: "white" }}
+            size="small"
+            onClick={() => setSelectedCardId(post._id)}
+          >
+            <MoreHorizIcon fontSize="medium"></MoreHorizIcon>
+          </Button>
+        </div>
+      )}
+
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">
           {post.tags.map((tag) => `#${tag} `)}
@@ -69,27 +117,19 @@ function Post({ post, setSelectedCardId }) {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => {
-            handlelikePost(post._id);
-          }}
-        >
-          <ThumbUpAltIcon fontSize="small" />
-          &nbsp; Like &nbsp;
-          {post.likeCount}
-        </Button>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => {
-            handleDelete(post._id);
-          }}
-        >
-          <DeleteIcon fontSize="small" />
-          Delete
-        </Button>
+        <Like />
+        {loginUser._id === post.creator && (
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => {
+              handleDelete(post._id);
+            }}
+          >
+            <DeleteIcon fontSize="small" />
+            Delete
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
