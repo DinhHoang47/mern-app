@@ -12,7 +12,10 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  const newPost = new PostMessage(post);
+  console.log("post: ", post);
+  const newPost = new PostMessage({ ...post, creator: req.userId });
+  console.log("newPost: ", newPost);
+
   try {
     await newPost.save();
     res.status(201).json(newPost);
@@ -60,16 +63,30 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   try {
-    const { id: _id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(_id)) {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).send("Post Id not found");
     }
-    const likedPost = await PostMessage.findByIdAndUpdate(
-      _id,
-      { $inc: { likeCount: 1 } },
-      { new: true }
+
+    const post = await PostMessage.findById(id);
+
+    const index = post.like.findIndex(
+      (currentId) => currentId === String(req.userId)
     );
-    res.json(likedPost);
+
+    if (index === -1) {
+      post.like.push(req.userId);
+    } else {
+      post.like = post.like.filter(
+        (currentId) => currentId !== String(req.userId)
+      );
+    }
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+      new: true,
+    });
+
+    res.status(200).json(updatedPost);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error" });

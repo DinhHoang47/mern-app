@@ -6,8 +6,16 @@ import { Container } from "@mui/material";
 import NavBar from "./components/Navbar/NavBar";
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
+import { user } from "./services/localServices";
+import { useDispatch } from "react-redux";
+import { LOGIN_USER } from "./constants/actionTypes";
 
 const App = () => {
+  const loginUser = user.get();
+  const dispatch = useDispatch();
+  if (loginUser) {
+    dispatch({ type: LOGIN_USER });
+  }
   return (
     <>
       <Helmet>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Card,
@@ -27,6 +27,12 @@ function Post({ post, setSelectedCardId }) {
   const handlelikePost = (id) => {
     dispatch(likePost(id));
   };
+  const Like = () => {
+    return <Button></Button>;
+  };
+
+  const loginUser = useSelector((state) => state.profile);
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -35,7 +41,7 @@ function Post({ post, setSelectedCardId }) {
         title={post.title}
       ></CardMedia>
       <div className={classes.overlay}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
         </Typography>

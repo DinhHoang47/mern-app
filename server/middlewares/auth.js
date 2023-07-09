@@ -9,8 +9,7 @@ export const auth = async (req, res, next) => {
     if (token) {
       // get decoded user data
       const decoded = verifyToken(token);
-      const userId = await User.findById(decoded._id).select("_id");
-      req.userId = userId;
+      req.userId = decoded.id;
       next();
     } else {
       const err = new Error("Token expired/invalid");

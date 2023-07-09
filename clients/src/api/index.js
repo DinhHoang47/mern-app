@@ -4,8 +4,9 @@ import { user } from "../services/localServices";
 const API = axios.create({ baseURL: process.env.REACT_APP_SERVER_BASE_URL });
 
 API.interceptors.request.use((req) => {
-  if (user.get().token) {
-    req.headers.Authorization = `Bearer ${user.get().token}`;
+  const loginUser = JSON.parse(user.get());
+  if (loginUser) {
+    req.headers.Authorization = `Bearer ${loginUser.token}`;
   }
   return req;
 });
