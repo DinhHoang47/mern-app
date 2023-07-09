@@ -23,6 +23,7 @@ export const signUp =
     try {
       // Trigger loading
       openMessage();
+      await api.signUp(userData);
       // Close loadin, throw success message
       closeMessage("success", "Sign-up successful.");
       setTimeout(() => {
@@ -42,7 +43,7 @@ export const googleSignIn =
       closeMessage("success", "Sign-in successful.");
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 500);
     } catch (error) {
       closeMessage("error", error.response?.data.message);
     }

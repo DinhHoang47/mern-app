@@ -6,3 +6,4 @@ export const DELETE = "DELETE";
 // Google Auth const
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
+export const LOGIN_USER = "LOGIN_USER";

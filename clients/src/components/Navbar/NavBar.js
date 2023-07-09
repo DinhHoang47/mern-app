@@ -51,13 +51,13 @@ export default function NavBar() {
             <div className={classes.profile}>
               <Avatar
                 className={classes.purple}
-                alt={user?.profile.name}
-                src={user?.profile.picture}
+                alt={user?.profile?.name}
+                src={user?.profile?.picture}
               >
-                {user?.profile.name?.charAt(0)}
+                {user?.profile?.name?.charAt(0)}
               </Avatar>
               <Typography className={classes.userName} variant="h6">
-                {user?.profile.name}
+                {user?.profile?.name}
               </Typography>
               <Button
                 onClick={logout}
