@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "dotenv/config";
 import "./index.css";
+import { injectStore } from "./api";
 
 import App from "./App.js";
 
@@ -16,6 +17,8 @@ const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+injectStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // Connect App and root element

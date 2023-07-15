@@ -18,6 +18,7 @@ import useStyle from "./styles";
 import moment from "moment";
 import noImg from "../../../images/no-image-200.svg";
 import { deletePost, likePost } from "../../../actions/posts";
+import { Link } from "react-router-dom";
 
 function Post({ post, setSelectedCardId }) {
   const classes = useStyle();
@@ -79,43 +80,51 @@ function Post({ post, setSelectedCardId }) {
   };
 
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image={post.selectedFile || noImg}
-        title={post.title}
-      ></CardMedia>
-      <div className={classes.overlay}>
-        <Typography variant="h6">{post.name}</Typography>
-        <Typography variant="body2">
-          {moment(post.createdAt).fromNow()}
-        </Typography>
-      </div>
-      {loginUser._id === post.creator && (
-        <div className={classes.overlay2}>
-          <Button
-            style={{ color: "white" }}
-            size="small"
-            onClick={() => setSelectedCardId(post._id)}
-          >
-            <MoreHorizIcon fontSize="medium"></MoreHorizIcon>
-          </Button>
+    <Card className={classes.card} raised elevation={6}>
+      <Link
+        to={`/posts/${post._id}`}
+        style={{ textDecoration: "inherit", color: "inherit" }}
+      >
+        <CardMedia
+          className={classes.media}
+          image={post.selectedFile || noImg}
+          title={post.title}
+        ></CardMedia>
+        <div className={classes.overlay}>
+          <Typography variant="h6">{post.name}</Typography>
+          <Typography variant="body2">
+            {moment(post.createdAt).fromNow()}
+          </Typography>
         </div>
-      )}
+        {loginUser._id === post.creator && (
+          <div className={classes.overlay2}>
+            <Button
+              style={{ color: "white" }}
+              size="small"
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedCardId(post._id);
+              }}
+            >
+              <MoreHorizIcon fontSize="medium"></MoreHorizIcon>
+            </Button>
+          </div>
+        )}
+        <div className={classes.details}>
+          <Typography variant="body2" color="textSecondary">
+            {post.tags.map((tag) => `#${tag} `)}
+          </Typography>
+        </div>
+        <Typography className={classes.title} variant="h5" gutterBottom>
+          {post.title}
+        </Typography>
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {post.message}
+          </Typography>
+        </CardContent>
+      </Link>
 
-      <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">
-          {post.tags.map((tag) => `#${tag} `)}
-        </Typography>
-      </div>
-      <Typography className={classes.title} variant="h5" gutterBottom>
-        {post.title}
-      </Typography>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {post.message}
-        </Typography>
-      </CardContent>
       <CardActions className={classes.cardActions}>
         <Like />
         {loginUser._id === post.creator && (

@@ -6,12 +6,14 @@ import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 import { createPost, editPost } from "../../actions/posts";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Form({ selectedCardId, setSelectedCardId }) {
   const classes = useStyle();
+  const navigate = useNavigate();
   const editingPost = useSelector((state) =>
     selectedCardId
-      ? state.posts.find((post) => post._id === selectedCardId)
+      ? state.posts.posts.find((post) => post._id === selectedCardId)
       : null
   );
 
@@ -22,7 +24,7 @@ function Form({ selectedCardId, setSelectedCardId }) {
   const postDataSchema = {
     title: "",
     message: "",
-    tags: "",
+    tags: [],
     selectedFile: "",
   };
   const [postData, setPostData] = useState(postDataSchema);
@@ -35,7 +37,7 @@ function Form({ selectedCardId, setSelectedCardId }) {
     if (selectedCardId) {
       dispatch(editPost(selectedCardId, { ...postData, name: userName }));
     } else {
-      dispatch(createPost({ ...postData, name: userName }));
+      dispatch(createPost({ ...postData, name: userName }, navigate));
     }
     clear();
   };
@@ -52,13 +54,13 @@ function Form({ selectedCardId, setSelectedCardId }) {
   }, [editingPost]);
   if (Object.keys(loginUser).length === 0) {
     return (
-      <Paper className={classes.paper}>
+      <Paper elevation={6} className={classes.paper}>
         <Typography variant="h6">Login to create your own post</Typography>
       </Paper>
     );
   } else {
     return (
-      <Paper className={classes.paper}>
+      <Paper elevation={6} className={classes.paper}>
         <form
           autoComplete="off"
           noValidate
