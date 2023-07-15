@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
@@ -18,7 +18,9 @@ import Input from "./Input";
 import { googleSignIn, signIn, signUp } from "../../actions/user";
 
 export default function Auth() {
+  console.log("Auth executed");
   const classes = useStyle();
+  const loginUser = useSelector((state) => state.profile);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {

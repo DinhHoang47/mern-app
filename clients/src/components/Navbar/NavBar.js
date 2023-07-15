@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import useStyle from "./styles";
 import memoriesImg from "../../images/memory-loss.png";
@@ -10,19 +10,14 @@ import { LOGOUT } from "../../constants/actionTypes";
 
 export default function NavBar() {
   const classes = useStyle();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
   const [messageApi, contextHolder] = message.useMessage();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  const user = useSelector((state) => state.profile);
 
-  const logout = () => {
+  const logout = (e) => {
+    e.preventDefault();
     dispatch({ type: LOGOUT });
-    navigate("/");
-    setUser(null);
     messageApi.success("Logged out.");
   };
   return (
@@ -47,20 +42,20 @@ export default function NavBar() {
           />
         </div>
         <Toolbar>
-          {user ? (
+          {Object.keys(user).length !== 0 ? (
             <div className={classes.profile}>
               <Avatar
                 className={classes.purple}
-                alt={user?.profile?.name}
-                src={user?.profile?.picture}
+                alt={user?.name}
+                src={user?.picture}
               >
-                {user?.profile?.name?.charAt(0)}
+                {user?.name?.charAt(0)}
               </Avatar>
               <Typography className={classes.userName} variant="h6">
-                {user?.profile?.name}
+                {user?.name}
               </Typography>
               <Button
-                onClick={logout}
+                onClick={(e) => logout(e)}
                 variant="contained"
                 className={classes.logout}
                 color="secondary"

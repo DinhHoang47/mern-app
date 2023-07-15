@@ -16,6 +16,6 @@ export const auth = async (req, res, next) => {
       throw err;
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(401).json({ message: error.message });
   }
 };
