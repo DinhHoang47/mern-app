@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { getPostsBySearch } from "../../actions/posts";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -30,7 +30,6 @@ export default function Home() {
   const classes = useStyle();
   const query = useQuery();
   const page = query.get("page") || 1;
-  const searchQuery = query.get("searchQuery");
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [tags, setTags] = useState([]);

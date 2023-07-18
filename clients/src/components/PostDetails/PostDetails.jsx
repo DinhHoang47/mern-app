@@ -1,29 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getPost, getPostsBySearch } from "../../actions/posts";
 import { Paper, CircularProgress, Divider, Typography } from "@mui/material";
 import moment from "moment";
 
 import useStyles from "./style";
 import CommentSection from "./CommentSection";
+import RecommendSection from "./RecommendSection";
 
 export default function PostDetails() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
   const { post, isLoading, posts } = useSelector((state) => state.posts);
 
-  // Method to handle open post detail
-
-  const openPost = (_id) => {
-    navigate(`/posts/${_id}`);
-  };
   // Get post after component mount
   useEffect(() => {
     dispatch(getPost(id));
-  }, [id]);
+  }, [id, dispatch]);
 
   // Fetch recommended posts after get post
   useEffect(() => {
@@ -32,7 +27,7 @@ export default function PostDetails() {
       dispatch(getPostsBySearch(queryParams));
     };
     fetchRecommended();
-  }, [post]);
+  }, [post, dispatch]);
   const recommendedPosts = posts.filter((data) => data._id !== post._id);
 
   // If object is empty return null
@@ -96,32 +91,9 @@ export default function PostDetails() {
           <Divider />
           <div
             style={{ marginTop: "20px" }}
-            className={classes.recommendedPosts}
+            // className={classes.recommendedPosts}
           >
-            {recommendedPosts.map(
-              ({ title, name, message, likes, selectedFile, _id }) => (
-                <Paper key={_id} elevation={3}>
-                  <div
-                    style={{ margin: "20px", cursor: "pointer" }}
-                    onClick={() => openPost(_id)}
-                  >
-                    <Typography gutterBottom variant="h6">
-                      {title}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle2">
-                      {name}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle2">
-                      {message}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle1">
-                      Likes: {likes.length}
-                    </Typography>
-                    <img src={selectedFile} width="200px" />
-                  </div>
-                </Paper>
-              )
-            )}
+            <RecommendSection recommendedPosts={recommendedPosts} />
           </div>
         </div>
       )}

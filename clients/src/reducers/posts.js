@@ -44,12 +44,13 @@ export default (state = { posts: [], isLoading: true, post: {} }, action) => {
       return {
         ...state,
         posts: state.posts.map((post) => {
-          if (post._id == action.payload._id) {
+          if (post._id === action.payload._id) {
             return action.payload;
           } else {
             return post;
           }
         }),
+        post: action.payload,
       };
     case DELETE:
       const deletePostId = action.payload;

@@ -49,4 +49,16 @@ export default makeStyles({
     display: "flex",
     justifyContent: "space-between",
   },
+  likeButton: {
+    textTransform: "none",
+    letterSpacing: "0px",
+    display: "flex",
+    "&&": { justifyContent: "flex-start" },
+  },
+  deleteButton: {
+    display: "flex",
+    "&&": {
+      justifyContent: "flex-end",
+    },
+  },
 });
