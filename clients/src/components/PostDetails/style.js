@@ -45,9 +45,16 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   commentsInnerContainer: {
-    height: "200px",
-    overflowY: "auto",
     marginRight: "10px",
     flexGrow: 1,
+  },
+  commentsContainer: {
+    height: "200px",
+    overflowY: "auto",
+  },
+  carouselItem: {
+    boxSizing: "border-box",
+    margin: "20px",
+    cursor: "pointer",
   },
 }));

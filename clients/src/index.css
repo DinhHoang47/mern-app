@@ -3,3 +3,26 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+}
+
+/* Overwrite the slick button css */
+.slick-prev,
+.slick-next {
+  font-size: 50px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  content: "" !important;
+}

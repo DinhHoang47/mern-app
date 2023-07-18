@@ -1,6 +1,6 @@
 import React from "react";
 import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
@@ -10,7 +10,6 @@ import { LOGOUT } from "../../constants/actionTypes";
 
 export default function NavBar() {
   const classes = useStyle();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const user = useSelector((state) => state.profile);

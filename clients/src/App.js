@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,17 +12,10 @@ import NavBar from "./components/Navbar/NavBar";
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
-import { useDispatch } from "react-redux";
-import { AUTH } from "./constants/actionTypes";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const loginUser = JSON.parse(localStorage.getItem("profile"));
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (loginUser) {
-      dispatch({ type: AUTH, payload: loginUser });
-    }
-  }, []);
+  const loginUser = useSelector((state) => state.profile);
   return (
     <>
       <Helmet>
@@ -39,7 +32,10 @@ const App = () => {
             <Route path="/posts" exact element={<Home />} />
             <Route path="/posts/search" exact element={<Home />} />
             <Route path="/posts/:id" exact element={<PostDetails />} />
-            <Route path="/auth" element={!loginUser ? <Auth /> : <Home />} />
+            <Route
+              path="/auth"
+              element={loginUser ? <Auth /> : <Navigate to="/posts" replace />}
+            />
           </Routes>
         </Container>
       </Router>
