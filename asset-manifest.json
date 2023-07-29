@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/mern-app/static/css/main.0d466a8d.chunk.css",
+    "main.js": "/mern-app/static/js/main.7c9e5d4a.chunk.js",
+    "main.js.map": "/mern-app/static/js/main.7c9e5d4a.chunk.js.map",
+    "runtime-main.js": "/mern-app/static/js/runtime-main.508903ae.js",
+    "runtime-main.js.map": "/mern-app/static/js/runtime-main.508903ae.js.map",
+    "static/css/2.14c3ffdf.chunk.css": "/mern-app/static/css/2.14c3ffdf.chunk.css",
+    "static/js/2.c16b00e5.chunk.js": "/mern-app/static/js/2.c16b00e5.chunk.js",
+    "static/js/2.c16b00e5.chunk.js.map": "/mern-app/static/js/2.c16b00e5.chunk.js.map",
+    "index.html": "/mern-app/index.html",
+    "precache-manifest.ba0ec25e4bf44fa542b88653cc40fca1.js": "/mern-app/precache-manifest.ba0ec25e4bf44fa542b88653cc40fca1.js",
+    "service-worker.js": "/mern-app/service-worker.js",
+    "static/css/2.14c3ffdf.chunk.css.map": "/mern-app/static/css/2.14c3ffdf.chunk.css.map",
+    "static/css/main.0d466a8d.chunk.css.map": "/mern-app/static/css/main.0d466a8d.chunk.css.map",
+    "static/js/2.c16b00e5.chunk.js.LICENSE.txt": "/mern-app/static/js/2.c16b00e5.chunk.js.LICENSE.txt",
+    "static/js/main.7c9e5d4a.chunk.js.LICENSE.txt": "/mern-app/static/js/main.7c9e5d4a.chunk.js.LICENSE.txt",
+    "static/media/memory-loss.png": "/mern-app/static/media/memory-loss.6be7519b.png",
+    "static/media/no-image-200.svg": "/mern-app/static/media/no-image-200.1ba87b87.svg",
+    "static/media/slick-theme.css": "/mern-app/static/media/slick.f97e3bbf.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.508903ae.js",
+    "static/css/2.14c3ffdf.chunk.css",
+    "static/js/2.c16b00e5.chunk.js",
+    "static/css/main.0d466a8d.chunk.css",
+    "static/js/main.7c9e5d4a.chunk.js"
+  ]
+}
